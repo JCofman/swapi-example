@@ -15,9 +15,6 @@ const StyledCard = styled.div`
   border: 15px solid white;
   color: rgba(74, 85, 104);
   background-color: white;
-  img {
-    width: 100%;
-  }
 
   &:hover {
     box-shadow: 0px 30px 100px -10px rgba(0, 0, 0, 0.4);
@@ -62,23 +59,32 @@ const StyledSubHeaderParagraph = styled.p`
 `;
 
 const StyledDescriptionList = styled.dl``;
+
 const StyledDescriptionWrapper = styled.div`
   display: grid;
   padding-top: 8px;
   padding-bottom: 8px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
 `;
+
 const StyledDescriptionListTerm = styled.dt`
   color: rgba(107, 114, 128);
   line-height: 18px;
   font-size: 14px;
   font-weight: 500;
 `;
+
 const StyledDescriptionListDescription = styled.dd`
   grid-column: span 2 / span 2;
 `;
 
-const Card = (props: StarWarsPlanet) => {
+const StyledCardImage = styled.img`
+  object-fit: cover;
+  width: 100%;
+  height: 250px;
+`;
+
+const StarWarsPlanetCard = (props: StarWarsPlanet) => {
   const {
     name,
     diameter,
@@ -99,7 +105,7 @@ const Card = (props: StarWarsPlanet) => {
 
   return (
     <StyledCard>
-      <img alt={`${name} planet`} src={imageSrc}></img>
+      <StyledCardImage alt={`${name} planet`} src={imageSrc}></StyledCardImage>
       <StyledCardWrapper>
         <StyledSubHeaderParagraph>
           created: <b>{createdFormattedDate}</b>
@@ -140,4 +146,4 @@ const Card = (props: StarWarsPlanet) => {
   );
 };
 
-export default Card;
+export default StarWarsPlanetCard;

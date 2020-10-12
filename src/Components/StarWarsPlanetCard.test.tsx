@@ -20,7 +20,12 @@ test('renders StarWarsPlanetCard data ', () => {
   const name = getByText(/Tatooine/i);
   const diameter = getByText(/10465/i);
   const terrain = getByText(/desert/i);
+  const gravity = getByText(/1 standard/i);
+  const population = getByText(/population/i);
+  expect(name).toBeInTheDocument();
   expect(name).toBeInTheDocument();
   expect(diameter).toBeInTheDocument();
   expect(terrain).toBeInTheDocument();
+  expect(population).toBeInTheDocument();
+  expect(gravity).toBeInTheDocument();
 });
