@@ -1,22 +1,24 @@
 export type StarWarsPlanet = {
   name: string;
-  diameter: string;
   rotation_period: string;
   orbital_period: string;
-  gravity: string;
-  population: string;
+  diameter: string;
   climate: string;
+  gravity: string;
   terrain: string;
   surface_water: string;
+  population: string;
+  residents: string[];
+  films: string[];
   created: string;
   edited: string;
+  url: string;
   imageSrc?: string;
 };
 
-export type StarWarsPlanets = [
-  {
-    fields: StarWarsPlanet;
-    model: string;
-    pk: string;
-  }
-];
+export interface StarWarsPlanets {
+  count: number;
+  next: string;
+  previous: any;
+  results: StarWarsPlanet[];
+}

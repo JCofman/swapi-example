@@ -64,7 +64,6 @@ const InfiniteWrapper = ({
 }) => {
   const itemCount = hasNextPage ? items.length + 1 : items.length;
   const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage;
-
   const isItemLoaded = (index: number) => !hasNextPage || index < items.length;
 
   // Render an item or a loading indicator.
@@ -72,7 +71,7 @@ const InfiniteWrapper = ({
     if (!isItemLoaded(index)) {
       return <div style={style}>Loading...</div>;
     } else {
-      const starWarsPlanetData = items[index].fields;
+      const starWarsPlanetData = items[index];
       return (
         <div style={style}>
           <StarWarsPlanetCard {...starWarsPlanetData}></StarWarsPlanetCard>
@@ -107,32 +106,36 @@ const InfiniteWrapper = ({
 };
 
 const addRandomImageToData = (data: StarWarsPlanets) => {
-  return data.map((data) => {
+  return data.results.map((resultData) => {
     const randomImageIndex = Math.floor(Math.random() * 15) + 1;
-    const randomImageSource = `http://localhost:3000/images/planet-${randomImageIndex}.jpg`;
-    return { ...data, fields: { ...data.fields, imageSrc: randomImageSource } };
+    const randomImageSource = `${process.env.PUBLIC_URL}/images/planet-${randomImageIndex}.jpg`;
+    return { ...resultData, imageSrc: randomImageSource };
   });
 };
 
+const MAX_PAGE = 6;
+const START_PAGE = 1;
+
 const App = () => {
-  const { data, error } = useSWR<StarWarsPlanets>('/planets.json', fetch);
+  const [page, setPage] = React.useState(START_PAGE);
+  const { data, error } = useSWR<StarWarsPlanets>(() => `https://swapi.dev/api/planets/?page=${page}`, fetch);
   const [starWarsData, setStarWarsData] = React.useState({
-    hasNextPage: true,
+    hasNextPage: data !== undefined && data.next !== undefined ? true : false,
     isNextPageLoading: false,
-    items: data !== undefined ? addRandomImageToData(data) : [],
+    items: data !== undefined && data.results ? addRandomImageToData(data) : [],
   });
 
   React.useEffect(() => {
     setStarWarsData((state) => {
       return {
         ...state,
-        items: data !== undefined ? addRandomImageToData(data) : [],
+        hasNextPage: data !== undefined && data.next !== undefined ? true : false,
+        items: data !== undefined ? [...state.items].concat(addRandomImageToData(data)) : state.items,
       };
     });
   }, [data]);
 
   if (error) return <div>failed to load {JSON.stringify(error)}</div>;
-  if (!data || !starWarsData.items) return <div>loading...</div>;
 
   const loadMoreStarWarsData = () => {
     // set loading state
@@ -142,14 +145,22 @@ const App = () => {
         isNextPageLoading: true,
       };
     });
-    // load new data
-    setTimeout(() => {
-      setStarWarsData((state) => ({
+
+    // load new data based on new page
+    setPage((page) => {
+      if (page === MAX_PAGE) {
+        return 1;
+      }
+      return page + 1;
+    });
+
+    setStarWarsData((state) => {
+      return {
+        ...state,
         hasNextPage: state.items.length < 100,
         isNextPageLoading: false,
-        items: [...state.items].concat(...state.items),
-      }));
-    }, 100);
+      };
+    });
   };
 
   return (
