@@ -1,10 +1,12 @@
-import React from 'react';
-import styled from 'styled-components';
-import { StarWarsPlanet } from '../types';
+/* eslint-disable @typescript-eslint/camelcase */
+import React from 'react'
+import styled from 'styled-components'
+import { StarWarsPlanet } from '../types/types'
+import Image from 'next/image'
 
 const StyledCard = styled.div`
   max-width: 240px;
-  min-height: 700px;
+  height: 700px;
   background: grey;
   border-radius: 5px;
   background-size: cover;
@@ -19,25 +21,25 @@ const StyledCard = styled.div`
   &:hover {
     box-shadow: 0px 30px 100px -10px rgba(0, 0, 0, 0.4);
   }
-`;
+`
 
 const StyledCardWrapper = styled.div`
   padding-left: 15px;
   padding-right: 15px;
-`;
+`
 
 const StyledCardHeader = styled.h4`
   margin-bottom: 5px;
   font-size: 18px;
   font-weight: 700;
-`;
+`
 
 const StyledCardTags = styled.div`
   padding-top: 10px;
   padding-bottom: 5px;
   padding-left: 15px;
   padding-right: 15px;
-`;
+`
 
 const StyledCardTag = styled.div`
   padding-left: 7.5px;
@@ -51,40 +53,42 @@ const StyledCardTag = styled.div`
   border-radius: 9999px;
   background-color: rgba(237, 242, 247);
   color: rgba(74, 85, 104);
-`;
+`
 
 const StyledSubHeaderParagraph = styled.p`
   font-size: 12px;
   color: rgba(113, 128, 150);
-`;
+`
 
-const StyledDescriptionList = styled.dl``;
+const StyledDescriptionList = styled.dl``
 
 const StyledDescriptionWrapper = styled.div`
   display: grid;
   padding-top: 8px;
   padding-bottom: 8px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-`;
+`
 
 const StyledDescriptionListTerm = styled.dt`
   color: rgba(107, 114, 128);
   line-height: 18px;
   font-size: 14px;
   font-weight: 500;
-`;
+`
 
 const StyledDescriptionListDescription = styled.dd`
   grid-column: span 2 / span 2;
-`;
+`
 
 const StyledCardImage = styled.img`
   object-fit: cover;
   width: 100%;
   height: 250px;
-`;
+`
 
-const StarWarsPlanetCard = (props: StarWarsPlanet) => {
+const StarWarsPlanetCard = (
+  props: StarWarsPlanet & { isNextImage: boolean }
+) => {
   const {
     name,
     diameter,
@@ -98,14 +102,29 @@ const StarWarsPlanetCard = (props: StarWarsPlanet) => {
     created,
     edited,
     imageSrc,
-  } = props;
+    isNextImage,
+  } = props
 
-  const createdFormattedDate = new Date(created).toLocaleDateString();
-  const editedFormattedDate = new Date(edited).toLocaleDateString();
+  const createdFormattedDate = new Date(created).toLocaleDateString()
+  const editedFormattedDate = new Date(edited).toLocaleDateString()
 
   return (
     <StyledCard>
-      <StyledCardImage alt={`${name} planet`} src={imageSrc}></StyledCardImage>
+      {isNextImage ? (
+        <Image
+          src={imageSrc}
+          alt={`${name} planet`}
+          height={250}
+          width={240}
+          layout="fixed"
+          objectFit="cover"
+        />
+      ) : (
+        <StyledCardImage
+          alt={`${name} planet`}
+          src={imageSrc}
+        ></StyledCardImage>
+      )}
       <StyledCardWrapper>
         <StyledSubHeaderParagraph>
           created: <b>{createdFormattedDate}</b>
@@ -117,23 +136,37 @@ const StarWarsPlanetCard = (props: StarWarsPlanet) => {
         <StyledDescriptionList>
           <StyledDescriptionWrapper>
             <StyledDescriptionListTerm>Diameter</StyledDescriptionListTerm>
-            <StyledDescriptionListDescription>{diameter}</StyledDescriptionListDescription>
+            <StyledDescriptionListDescription>
+              {diameter}
+            </StyledDescriptionListDescription>
           </StyledDescriptionWrapper>
           <StyledDescriptionWrapper>
-            <StyledDescriptionListTerm>Rotation Period</StyledDescriptionListTerm>
-            <StyledDescriptionListDescription>{rotation_period}</StyledDescriptionListDescription>
+            <StyledDescriptionListTerm>
+              Rotation Period
+            </StyledDescriptionListTerm>
+            <StyledDescriptionListDescription>
+              {rotation_period}
+            </StyledDescriptionListDescription>
           </StyledDescriptionWrapper>
           <StyledDescriptionWrapper>
-            <StyledDescriptionListTerm>Orbital Period</StyledDescriptionListTerm>
-            <StyledDescriptionListDescription>{orbital_period}</StyledDescriptionListDescription>
+            <StyledDescriptionListTerm>
+              Orbital Period
+            </StyledDescriptionListTerm>
+            <StyledDescriptionListDescription>
+              {orbital_period}
+            </StyledDescriptionListDescription>
           </StyledDescriptionWrapper>
           <StyledDescriptionWrapper>
             <StyledDescriptionListTerm>Gravity</StyledDescriptionListTerm>
-            <StyledDescriptionListDescription>{gravity}</StyledDescriptionListDescription>
+            <StyledDescriptionListDescription>
+              {gravity}
+            </StyledDescriptionListDescription>
           </StyledDescriptionWrapper>
           <StyledDescriptionWrapper>
             <StyledDescriptionListTerm>Population</StyledDescriptionListTerm>
-            <StyledDescriptionListDescription>{population}</StyledDescriptionListDescription>
+            <StyledDescriptionListDescription>
+              {population}
+            </StyledDescriptionListDescription>
           </StyledDescriptionWrapper>
         </StyledDescriptionList>
       </StyledCardWrapper>
@@ -143,7 +176,7 @@ const StarWarsPlanetCard = (props: StarWarsPlanet) => {
         <StyledCardTag>{surface_water}</StyledCardTag>
       </StyledCardTags>
     </StyledCard>
-  );
-};
+  )
+}
 
-export default StarWarsPlanetCard;
+export default StarWarsPlanetCard
