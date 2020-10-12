@@ -1,0 +1,26 @@
+import React from 'react';
+import { render } from '@testing-library/react';
+import StarWarsPlanetCard from './StarWarsPlanetCard';
+
+const StarWarsPlanetExampleData = {
+  edited: '2014-12-20T20:58:18.411Z',
+  climate: 'arid',
+  surface_water: '1',
+  name: 'Tatooine',
+  diameter: '10465',
+  rotation_period: '23',
+  created: '2014-12-09T13:50:49.641Z',
+  terrain: 'desert',
+  gravity: '1 standard',
+  orbital_period: '304',
+  population: '200000',
+};
+test('renders StarWarsPlanetCard data ', () => {
+  const { getByText } = render(<StarWarsPlanetCard {...StarWarsPlanetExampleData} />);
+  const name = getByText(/Tatooine/i);
+  const diameter = getByText(/10465/i);
+  const terrain = getByText(/desert/i);
+  expect(name).toBeInTheDocument();
+  expect(diameter).toBeInTheDocument();
+  expect(terrain).toBeInTheDocument();
+});
