@@ -124,11 +124,10 @@ const InfiniteWrapper = ({
   )
 }
 
-const addRandomImageToData = (data: StarWarsPlanets) => {
-  return data.results.map((resultData) => {
-    const randomImageIndex = Math.floor(Math.random() * 15) + 1
-    const randomImageSource = `/images/planet-${randomImageIndex}.jpg`
-    return { ...resultData, imageSrc: randomImageSource }
+const addImageToData = (data: StarWarsPlanets) => {
+  return data.results.map((resultData, index) => {
+    const imageSource = `/images/planet-${index}.jpg`
+    return { ...resultData, imageSrc: imageSource }
   })
 }
 
@@ -147,7 +146,7 @@ const App = () => {
   const starWarsPlanets = data
     ? [].concat(
         ...data.map((data) => {
-          return addRandomImageToData(data)
+          return addImageToData(data)
         })
       )
     : []
