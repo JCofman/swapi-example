@@ -118,6 +118,8 @@ const StarWarsPlanetCard = (
           width={240}
           layout="fixed"
           objectFit="cover"
+          loading="eager"
+          priority
         />
       ) : (
         <StyledCardImage
