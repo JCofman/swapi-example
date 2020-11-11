@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render } from '../test/testUtils'
 import StarWarsPlanetCard from './StarWarsPlanetCard'
 
 const StarWarsPlanetExampleData = {
@@ -16,6 +16,10 @@ const StarWarsPlanetExampleData = {
   gravity: '1 standard',
   orbital_period: '304',
   population: '200000',
+  residents: ['aliens'],
+  films: [''],
+  url: '',
+  isNextImage: false,
 }
 test('renders StarWarsPlanetCard data ', () => {
   const { getByText } = render(

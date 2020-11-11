@@ -19,7 +19,7 @@ const Button = styled.button`
   border-radius: 3px;
 `
 const StyledStarWarsLogo = styled.img`
-  height: 20vmin;
+  height: 200px;
   pointer-events: none;
 `
 
@@ -165,7 +165,7 @@ const App = () => {
     <div>
       <StyledHeader>
         <StyledStarWarsLogo
-          height={250}
+          height={200}
           src={'./star-wars-logo.svg'}
           alt="star-wars-logo"
         />
